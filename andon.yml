@@ -1,13 +1,34 @@
 general:
   whitelist: true
   pipeline_base_name: Eureka
+#  dependency:
+#   - Pipeline X [Stage X]
+#   - Pipeline Y [Stage Y]
+  
+#pre_stage:
+#  go_cd_agent_props:
+#    - node:6
+#  custom_cmd:
+#    - npm version
+  
 compile:
   go_cd_agent_props:
     - java:8
     - maven
   sonarqube: true
-  type: parallel
-  commands:
-    - tasks:
-      - cmd: mvn clean -Djava.security.egd=file:/dev/./urandom install
-        build_path: .
+  stages:
+    - stage: Compile
+      jobs:
+        - job: Maven
+          tasks:
+            - task: mvn clean -Djava.security.egd=file:/dev/./urandom install
+              build_path: .
+              run_if_conditions: passed
+  
+#post_stage:
+#  go_cd_agent_props:
+#    - java:8
+#    - maven
+#  custom_cmd:
+#    - true
+#    - true
