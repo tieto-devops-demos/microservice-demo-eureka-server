@@ -1,6 +1,6 @@
 # eureka.andon.yml
 pipelines:
-  Eureka: 
+  Eureka:
     environment_variables:
       SONARUSER: admin
       SONARPASSWORD: admin
